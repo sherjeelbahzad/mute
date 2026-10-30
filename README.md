@@ -39,7 +39,7 @@ Drop files into `public/` and reference them by path.
 **Product pictures and video** — in `src/lib/products.ts`. Each product's photos live in `public/products/<id>/` as `01.jpg`, `02.jpg`, and so on. The `pictures(id, count, main, hover)` helper picks the main card photo, the photo shown on hover, and puts the rest in the gallery:
 
 ```ts
-...pictures("astronaut", 8, 6, 4),   // 8 photos; #6 on the card, #4 on hover
+...pictures("astronaut", 5, 3, 1),   // 5 photos; #3 on the card, #1 on hover
 video: { src: "/products/astronaut/film.mp4", poster: "/products/astronaut/06.jpg" },  // optional
 ```
 
@@ -47,7 +47,7 @@ To add photos to a design, drop more numbered JPGs in its folder (keep them arou
 
 The original photos were exported from `E:\Mute Img` with ffmpeg at 1600px height, quality 4. Re-run that export if you replace the shoot.
 
-**Reels** (the vertical brand videos) live in `public/media/reels/` as `reel-NN.mp4` with a `reel-NN.jpg` poster, exported from `E:\mute brand reel video` at 720x1280 (H.264, CRF 27, AAC 96k). The `reels` list in `src/lib/content.ts` picks which ones show in the swipeable strip on the home page and which product each links to; `video: reel("NN")` on a product in `src/lib/products.ts` adds it to that product's gallery. Reels 01-06 are the six tees on the first model, 07-12 the same on the second model, 13 a short extra.
+**Reels** (the vertical brand videos) live in `public/media/reels/` as `reel-NN.mp4` with a `reel-NN.jpg` poster, exported from `E:\mute brand reel video` at 720x1280 (H.264, CRF 27, AAC 96k). The `reels` list in `src/lib/content.ts` picks which ones show in the swipeable strip on the home page and which product each links to; `video: reel("NN")` on a product in `src/lib/products.ts` adds it to that product's gallery. Reels 01-06 are the six tees in catalogue order, 13 a short extra. (The second model's reels and photos were removed from the site; the originals are still in `E:\Mute Img` and `E:\mute brand reel video`.)
 
 **Hero banners** (top of the home page) and **promo banners** (further down) — in `src/lib/content.ts`. Each banner is a picture or a video plus headline, body and button:
 

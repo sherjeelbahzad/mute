@@ -50,7 +50,7 @@ export const heroBanners: Banner[] = [
 
 /**
  * Vertical brand reels (9:16 mp4) shown as a swipeable strip on the home page.
- * Reels 01-06 are the six tees on the first model, 07-12 the same six on the second, 13 a short extra.
+ * Reels 01-06 are the six tees in catalogue order; 13 is a short extra Astronaut clip.
  */
 export type Reel = { id: string; src: string; poster: string; productId: string };
 export const reels: Reel[] = [

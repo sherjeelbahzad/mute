@@ -18,7 +18,7 @@ export function Lookbook() {
           </h2>
         </div>
         <p className="max-w-sm text-sm text-ink/60">
-          Shot in one afternoon, one light, two people. What you see is what arrives.
+          Shot in one afternoon, one light, one model. What you see is what arrives.
         </p>
       </Reveal>
       <ul className="mt-10 grid auto-rows-[220px] grid-cols-2 gap-3 sm:auto-rows-[260px] lg:grid-cols-4">

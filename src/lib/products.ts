@@ -51,7 +51,7 @@ export const products: Product[] = [
     description:
       "An astronaut dunking the planet through a hoop on your chest. Side-body print that wraps the hem, small hoop at the heart.",
     details: ["Two-position screen print", ...fabric],
-    ...pictures("astronaut", 8, 6, 4),
+    ...pictures("astronaut", 5, 3, 1),
     video: reel("01"),
     featured: true,
     badge: "Best seller",
@@ -67,7 +67,7 @@ export const products: Product[] = [
     description:
       "A 404 for your torso. Hand-drawn orbit lines circling three crossed-out marks, under a NOT FOUND block across the chest.",
     details: ["Single-colour screen print", ...fabric],
-    ...pictures("not-found", 8, 5, 2),
+    ...pictures("not-found", 4, 3, 1),
     video: reel("02"),
     featured: true,
     badge: "New",
@@ -83,7 +83,7 @@ export const products: Product[] = [
     description:
       "The outline of home, provinces and all, drawn in one white line across the chest. Quiet from far away, obvious up close.",
     details: ["Single-line chest print", ...fabric],
-    ...pictures("map", 11, 10, 2),
+    ...pictures("map", 5, 4, 2),
     video: reel("03"),
     featured: true,
   },
@@ -98,7 +98,7 @@ export const products: Product[] = [
     description:
       "Our name, cut up and stacked twice. The glitch is the point: the only shirt we make that says Mute out loud.",
     details: ["Chest print, charcoal on grey", ...fabric],
-    ...pictures("mute-wordmark", 8, 4, 6),
+    ...pictures("mute-wordmark", 4, 4, 2),
     video: reel("04"),
     featured: true,
   },
@@ -112,7 +112,7 @@ export const products: Product[] = [
     category: "simple",
     description: "The blank. Same heavyweight cotton as the graphics, no print, nothing to explain.",
     details: ["No print, tagless neck", ...fabric],
-    ...pictures("simple-green", 10, 4, 6),
+    ...pictures("simple-green", 4, 4, 2),
     video: reel("05"),
   },
   {
@@ -125,7 +125,7 @@ export const products: Product[] = [
     category: "simple",
     description: "The blank, in grey. Same heavyweight cotton as the graphics, no print, nothing to explain.",
     details: ["No print, tagless neck", ...fabric],
-    ...pictures("simple-grey", 7, 1, 5),
+    ...pictures("simple-grey", 3, 1, 3),
     video: reel("06"),
   },
 ];
@@ -144,14 +144,14 @@ export function featuredProducts() {
 
 /** Hand-picked shots for the home page lookbook: [product id, 1-based photo number]. */
 export const lookbook: [string, number][] = [
-  ["astronaut", 4],
-  ["map", 2],
-  ["not-found", 1],
-  ["mute-wordmark", 8],
-  ["simple-green", 2],
-  ["not-found", 6],
   ["astronaut", 1],
-  ["map", 6],
+  ["map", 2],
+  ["not-found", 2],
+  ["mute-wordmark", 1],
+  ["simple-green", 2],
+  ["not-found", 4],
+  ["astronaut", 5],
+  ["map", 5],
 ];
 
 export function shot(productId: string, n: number) {
