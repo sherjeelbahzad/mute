@@ -26,7 +26,7 @@ Without a Stripe key the whole site works except the final Checkout button, whic
 | Banner pictures and videos | `public/media/` |
 | Brand colours and display font | `src/app/globals.css` (mint `#8ACFB5`, ink, paper; Unbounded for headlines) |
 | Cart state (persisted in localStorage) | `src/lib/cart.tsx` |
-| Drop-in animated components (Vengeance UI, Skiper UI, Animata) | `src/components/ui/` (e.g. `staggerText.tsx` from https://www.vengenceui.com/components/stagger-text); see the `ui-components` skill in `.claude/skills/` for how to add more |
+| Drop-in animated components (Vengeance UI, Skiper UI, Animata) | `src/components/ui/`: Stagger Text (section headings), Stats Counter (hero numbers), Line Hover Link (nav underline), Animated Tooltip ("Which size?" on product pages), Animated Button ("Add to cart"), all from https://www.vengenceui.com/components (MIT). See the `ui-components` skill in `.claude/skills/` for how to add more |
 | Stripe Checkout session | `src/app/api/checkout/route.ts` |
 | Meta Pixel events | `src/lib/pixel.ts`, `src/components/MetaPixel.tsx` |
 | Meta catalog feed | `src/app/api/meta-catalog/route.ts` |

@@ -6,6 +6,10 @@ import { useCart } from "@/lib/cart";
 import { siteConfig, type Size } from "@/lib/config";
 import type { Product } from "@/lib/products";
 import { trackAddToCart } from "@/lib/pixel";
+import AnimatedButton from "./ui/animated-button";
+import AnimatedTooltip from "./ui/animated-tooltip";
+
+const CHEST = "Regular fit. Between sizes? Go one up.";
 
 export function AddToCart({ product }: { product: Product }) {
   const { add } = useCart();
@@ -29,9 +33,14 @@ export function AddToCart({ product }: { product: Product }) {
     <div className="mt-8">
       <div className="flex items-center justify-between text-sm">
         <span className="font-medium">Size</span>
-        <Link href="/about#sizing" className="text-ink/60 underline underline-offset-4 hover:opacity-60">
-          Size guide
-        </Link>
+        <span className="flex items-center gap-1 text-ink/60">
+          <AnimatedTooltip variant="smaug" content={CHEST} className="-my-2">
+            Which size?
+          </AnimatedTooltip>
+          <Link href="/about#sizing" className="underline underline-offset-4 hover:opacity-60">
+            Size guide
+          </Link>
+        </span>
       </div>
       <div className="mt-3 grid grid-cols-6 gap-2" role="radiogroup" aria-label="Size">
         {siteConfig.sizes.map((s) => {
@@ -58,13 +67,9 @@ export function AddToCart({ product }: { product: Product }) {
         })}
       </div>
       {error && <p className="mt-2 text-sm text-red-700">{error}</p>}
-      <button
-        type="button"
-        onClick={handleAdd}
-        className="mt-6 h-13 w-full rounded-full bg-mint font-display text-sm font-bold text-ink transition-all hover:bg-mint-deep hover:text-paper"
-      >
+      <AnimatedButton type="button" onClick={handleAdd} className="mt-6 h-13 w-full">
         {added ? "Added to cart" : "Add to cart"}
-      </button>
+      </AnimatedButton>
       {added && (
         <p className="mt-3 text-center text-sm text-ink/60">
           <Link href="/cart" className="underline underline-offset-4">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import StatsCounter from "./ui/stats-counter";
 
 /** The motto. Copy rises in on scroll (CSS .motto-in) and the brand mark revolves in 3D beside it (#logo-anchor). */
 export function Hero() {
@@ -35,15 +36,18 @@ export function Hero() {
             See the lookbook
           </Link>
         </div>
+        {/* Numbers count up when they scroll into view (Vengeance Stats Counter). */}
         <dl className="mt-12 grid max-w-md grid-cols-3 gap-4 border-t border-ink/10 pt-6 text-sm">
           {[
-            ["240 gsm", "Heavyweight cotton"],
-            ["6", "Designs"],
-            ["2 days", "To dispatch"],
-          ].map(([k, v]) => (
-            <div key={k}>
-              <dt className="font-display text-xl font-bold">{k}</dt>
-              <dd className="mt-1 text-ink/60">{v}</dd>
+            { value: 240, suffix: " gsm", label: "Heavyweight cotton" },
+            { value: 6, suffix: "", label: "Designs" },
+            { value: 2, suffix: " days", label: "To dispatch" },
+          ].map((s) => (
+            <div key={s.label}>
+              <dt className="font-display text-xl font-bold">
+                <StatsCounter value={s.value} suffix={s.suffix} duration={1.4} />
+              </dt>
+              <dd className="mt-1 text-ink/60">{s.label}</dd>
             </div>
           ))}
         </dl>

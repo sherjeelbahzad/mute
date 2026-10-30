@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/lib/cart";
 import { Logo } from "./Logo";
+import { LineHoverStyles } from "./ui/line-hover-link";
 
 const nav = [
   { href: "/shop", label: "Shop" },
@@ -17,6 +18,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-ink/5 bg-paper/70 backdrop-blur-xl">
+      <LineHoverStyles />
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Logo />
         <nav className="flex items-center gap-5 text-sm sm:gap-8">
@@ -26,7 +28,8 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative hidden transition-opacity hover:opacity-60 sm:block ${
+                // Vengeance "line hover" underline slides in from the left; the active page keeps a mint line.
+                className={`link-hover link-hover--slide hidden sm:inline-flex ${
                   active ? "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-mint" : ""
                 }`}
               >
