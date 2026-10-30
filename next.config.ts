@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Plain static generation: the catalog is a file, so every page can be fully prerendered.
   turbopack: {
     rules: {
       "*.css": {
