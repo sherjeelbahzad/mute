@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { after } from "next/server";
+import { cookies, headers } from "next/headers";
 import Stripe from "stripe";
 import { OrderComplete, type OrderSummary } from "@/components/OrderComplete";
+import { sendPurchaseToMeta } from "@/lib/meta-capi";
 
 export const metadata: Metadata = {
   title: "Order confirmed",
   robots: { index: false },
 };
 
-async function loadOrder(sessionId: string | undefined): Promise<OrderSummary | null> {
+type LoadedOrder = { order: OrderSummary; email: string | null; phone: string | null };
+
+async function loadOrder(sessionId: string | undefined): Promise<LoadedOrder | null> {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!sessionId || !key) return null;
   try {
@@ -26,10 +31,14 @@ async function loadOrder(sessionId: string | undefined): Promise<OrderSummary | 
       return { id, quantity: li.quantity ?? 1 };
     });
     return {
-      id: session.id,
-      value: (session.amount_total ?? 0) / 100,
-      currency: session.currency ?? "pkr",
-      contents,
+      order: {
+        id: session.id,
+        value: (session.amount_total ?? 0) / 100,
+        currency: session.currency ?? "pkr",
+        contents,
+      },
+      email: session.customer_details?.email ?? null,
+      phone: session.customer_details?.phone ?? null,
     };
   } catch {
     return null;
@@ -38,7 +47,29 @@ async function loadOrder(sessionId: string | undefined): Promise<OrderSummary | 
 
 export default async function SuccessPage(props: PageProps<"/checkout/success">) {
   const { session_id } = await props.searchParams;
-  const order = await loadOrder(typeof session_id === "string" ? session_id : undefined);
+  const loaded = await loadOrder(typeof session_id === "string" ? session_id : undefined);
+
+  if (loaded) {
+    // Server-side copy of the Purchase event (Conversions API), sent after the page is served so it
+    // never slows the customer down. Deduplicated against the browser pixel by the order id.
+    const h = await headers();
+    const c = await cookies();
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+    const event = {
+      orderId: loaded.order.id,
+      value: loaded.order.value,
+      currency: loaded.order.currency,
+      contents: loaded.order.contents,
+      sourceUrl: `${siteUrl}/checkout/success`,
+      email: loaded.email,
+      phone: loaded.phone,
+      clientIp: h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? h.get("x-real-ip"),
+      userAgent: h.get("user-agent"),
+      fbp: c.get("_fbp")?.value ?? null,
+      fbc: c.get("_fbc")?.value ?? null,
+    };
+    after(() => sendPurchaseToMeta(event));
+  }
 
   return (
     <div className="mx-auto max-w-xl px-4 py-24 text-center sm:px-6">
@@ -47,7 +78,7 @@ export default async function SuccessPage(props: PageProps<"/checkout/success">)
       <p className="mt-4 text-ink/70">
         A receipt is on its way to your inbox. We will email again when your tees ship.
       </p>
-      <OrderComplete order={order} />
+      <OrderComplete order={loaded?.order ?? null} />
       <Link
         href="/shop"
         className="mt-10 inline-flex h-11 items-center rounded-md border border-ink/20 px-6 text-sm font-medium hover:border-ink"

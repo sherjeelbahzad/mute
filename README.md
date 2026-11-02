@@ -82,7 +82,9 @@ DOM visuals also move with CSS scroll timelines (no JS): `.drift` parallaxes any
 1. **Pixel** — put your Pixel ID in `NEXT_PUBLIC_META_PIXEL_ID`. The site then fires PageView on every page, ViewContent on product pages, AddToCart, InitiateCheckout, and Purchase (with order value and currency) on the confirmation page. Check them in Events Manager > Test events.
 2. **Catalog** — in Commerce Manager add a scheduled feed pointing at `https://<your-domain>/api/meta-catalog`. Product IDs in the feed match the pixel's `content_ids`, so dynamic ads and Instagram Shopping tags work.
 3. **Sharing** — every page has Open Graph tags; product pages also carry price and retailer item id tags so Meta can link them to the catalog.
-4. **Conversions API** (server-side events) is not set up. The Purchase event already sends an `eventID` (the Stripe session id), so adding CAPI later will de-duplicate cleanly.
+4. **Conversions API** — set `META_CAPI_ACCESS_TOKEN` (Events Manager > pixel > Settings > Generate access token) and every paid order also sends a server-side Purchase event from the confirmation page (`src/lib/meta-capi.ts`), with hashed email and phone, IP, user agent and the `_fbp`/`_fbc` cookies. Its `event_id` is the Stripe session id, the same `eventID` the browser pixel sends, so Meta counts each sale once. While testing, put a code from Events Manager > Test events in `META_CAPI_TEST_EVENT_CODE`. The Graph API version defaults to v23.0 (`META_GRAPH_VERSION` overrides it).
+5. **Domain verification** — paste the token from Business Settings > Brand Safety > Domains into `NEXT_PUBLIC_META_DOMAIN_VERIFICATION`; the site then emits the `facebook-domain-verification` meta tag.
+6. **Policies** — Meta's ad review needs a privacy policy and terms. They are at `/privacy` and `/terms` (`src/app/privacy`, `src/app/terms`), linked from the footer. Read them before going live: they describe the Meta Pixel, Conversions API, local-storage cart, a 30-day unworn return window and two-day dispatch. Edit anything that is not true for you.
 
 ## Payments
 

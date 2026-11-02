@@ -41,6 +41,10 @@ export const metadata: Metadata = {
     images: [{ url: "/media/og.jpg", width: 1200, height: 630, alt: siteConfig.name }],
   },
   twitter: { card: "summary_large_image" },
+  // Meta domain verification (Business Settings > Brand Safety > Domains). Set the token in env to emit the tag.
+  ...(process.env.NEXT_PUBLIC_META_DOMAIN_VERIFICATION
+    ? { verification: { other: { "facebook-domain-verification": [process.env.NEXT_PUBLIC_META_DOMAIN_VERIFICATION] } } }
+    : {}),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

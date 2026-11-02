@@ -28,9 +28,13 @@ export function Footer() {
           <Link href="/about" className="hover:text-mint">Shipping and returns</Link>
         </div>
       </div>
-      <div className="mx-auto flex max-w-7xl items-end justify-between px-4 pb-6 sm:px-6">
-        <p className="text-xs text-paper/40">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-4 px-4 pb-6 text-xs text-paper/40 sm:px-6">
+        <p>
           &copy; {siteConfig.foundedYear} {siteConfig.name}. {siteConfig.tagline}
+        </p>
+        <p className="flex gap-5">
+          <Link href="/privacy" className="hover:text-mint">Privacy</Link>
+          <Link href="/terms" className="hover:text-mint">Terms</Link>
         </p>
       </div>
       <p
